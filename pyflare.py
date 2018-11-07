@@ -10,7 +10,6 @@ class Cloudflare:
 
     def getmyip(self):
         r = requests.get("https://api.ipify.org/")
-        r.raise_for_status()
         return r.text
 
     def user(self):
