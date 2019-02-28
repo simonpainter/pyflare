@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import json
+import json, os
 
 import requests
 
@@ -41,14 +41,15 @@ class Cloudflare:
             return "OK"
 
 if __name__ == '__main__':
-    try:
-        with open('config.json') as json_data_file:
-            config = json.load(json_data_file)
-            email = config['email']
-            key = config['key']
-            zone = config['zone']
-            record = config['record']
-        cf = Cloudflare(email, key)
-        print(cf(zone,record))
-    except IOError:
-        print("Unable to find config file.")
+	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+	try:
+		with open(os.path.join(__location__,'config.json')) as json_data_file:
+			config = json.load(json_data_file)
+			email = config['email']
+			key = config['key']
+			zone = config['zone']
+			record = config['record']
+		cf = Cloudflare(email, key)
+		print(cf(zone,record))
+	except IOError:
+		print("Unable to find config file.")
