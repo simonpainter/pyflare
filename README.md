@@ -1,21 +1,30 @@
 # pyflare
 Updates Cloudflare with current IP
 
-So I got sick of all those free dynamic dns services and fortunately some nice person on Reddit came up with this idea:
-https://www.reddit.com/r/raspberry_pi/comments/9nimtz/use_cloudflare_as_dynamic_dns_with_raspberry_pi/
-If you are a Redditor please go give u/TheFirsh some tasty tasty karma.
+In addition to many other benefits, Cloudflare will host your DNS for free. This script provides an alternative to dynamic dns services by leveraging Cloudflare's API. It does this by taking your current IP and updating Cloudflare's DNS records. In doing so, Cloudflare will always point to your correct IP even as it changes.
 
- Cloudflare will host your DNS for free, on top of a whole heap of other benefits, and they have a really good API for updating DNS records. The idea is that you run this script like you would a dynamic DNS client - it's python so entirely cross platform and uses minimal and very common libraries.
+Inspiration: https://www.reddit.com/r/raspberry_pi/comments/9nimtz/use_cloudflare_as_dynamic_dns_with_raspberry_pi/
+
+
+# Prerequisites
+You must have a Cloudflare account with one domain (zone) available. This script will update the records associated with this zone.
+* Create an account with Cloudflare
+* Set up at least one domain with them
+* When logged in, go to your Profile > API Tokens > Create Token
+* During token creation, enable permissions "Zone.Zone.Settings" and "Zone.Zone," and "Zone.DNS" with resources "All Zones"
+
 
 # config.json
 
-You will need to create a config.json file in the same folder as pyflare.py - this file must be json formatted and contain the following 4 elements.
-Note the curly braces are not to be included.
+Create a file named "config.json" in the same directory as pyflare.py. This file should be formatted as JSON. For multiple records, create a list (or array) of dictionaries (objects) containing your parameters.
+
 ```
-{
-	"email": "{the email address on your Cloudflare account}",
-	"key": "{your API key for Cloudflare}",
-	"zone": "{the DNS zone that contains the record you are updating}",
-	"record": "{the specific record to be updated}"
-}
+[
+	{
+		"email": "<YOUR CLOUDFLARE EMAIL ADDRESS>",
+		"key": "<YOUR CLOUDFLARE API KEY>",
+		"zone": "<THE DNS ZONE CONTAINING THE RECORD TO BE UPDATED (e.g. domain.com)>",
+		"record": "<THE SPECIFIC RECORD TO UPDATE (e.g. api.domain.com)>"
+	}
+]
 ```
