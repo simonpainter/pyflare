@@ -26,17 +26,17 @@ class Cloudflare:
         r = requests.get(self.endpoint + "/zones/" + zone_id + "/dns_records", headers=self.headers, params=payload)
         return r.json()
 
-    def update_record(self, zone_id, record_id, record, ip_address):
-        payload = {'type': 'A', 'name': record, 'content': ip_address}
+    def update_record(self, zone_id, record_id, record, ttl, ip_address):
+        payload = {'type': 'A', 'name': record,'ttl': ttl, 'content': ip_address}
         r = requests.put(self.endpoint + "/zones/" + zone_id + "/dns_records/" + record_id, headers=self.headers, data=json.dumps(payload))
         return r.json()
 
-    def __call__(self,zone,record):
+    def __call__(self,zone,record,ttl):
         zone_id = cf.zones(zone)['result'][0]['id']
         record_id = cf.dns_records(zone_id, record)['result'][0]['id']
         ip_address = cf.getmyip()
         if ip_address != cf.dns_records(zone_id, record)['result'][0]['content']:
-            return cf.update_record(zone_id, record_id, record, ip_address)
+            return cf.update_record(zone_id, record_id, record, ttl, ip_address)
         else:
             return "OK"
 
@@ -49,7 +49,8 @@ if __name__ == '__main__':
 			key = config['key']
 			zone = config['zone']
 			record = config['record']
+			ttl = config['ttl']
 		cf = Cloudflare(email, key)
-		print(cf(zone,record))
+		print(cf(zone,record,ttl))
 	except IOError:
 		print("Unable to find config file.")
