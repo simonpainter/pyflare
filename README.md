@@ -18,5 +18,6 @@ Note the curly braces are not to be included.
 	"zone": "{the DNS zone that contains the record you are updating}",
 	"record": "{the specific record to be updated}"
 	"ttl": "{time to live, 1=automatic}"
+	"proxied": "{true or false, default=false}"
 }
 ```
