@@ -17,12 +17,14 @@ You will need to create a config.json file in the same folder as pyflare.py - th
 		"email": "username@email.com",
 		"key": "secretkeysecretkeysecretkey",
 		"zone": "mydomain.com",
-		"record": "myrecord.mydomain.com"
+		"record": "myrecord.mydomain.com",
+		"ttl": "1"
 	}, {
 		"email": "username@email.com",
 		"key": "secretkeysecretkeysecretkey",
 		"zone": "anotherdomain.com",
-		"record": "myrecord.anotherdomain.com"
+		"record": "myrecord.anotherdomain.com",
+		"ttl": "1"
 	}]
 }
 ```
