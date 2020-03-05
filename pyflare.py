@@ -44,16 +44,17 @@ if __name__ == '__main__':
 	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 	try:
 		with open(os.path.join(__location__,'config.json')) as json_data_file:
-			config = json.load(json_data_file)
-			email = config['email']
-			key = config['key']
-			zone = config['zone']
-			record = config['record']
-			ttl = config['ttl']
-			proxied = config['proxied']
+            config = json.load(json_data_file)
+            for item in config['items']:
+                email = item['email']
+                key = item['key']
+                zone = item['zone']
+                record = item['record']
+                ttl = item['ttl']
+                proxied = item['proxied']
 
-		cf = Cloudflare(email, key)
-		print(cf(zone,record,ttl, proxied))
+                cf = Cloudflare(email, key)
+                print(cf(zone,record,ttl, proxied))
 	except IOError:
 		print("Unable to find config file.")
 

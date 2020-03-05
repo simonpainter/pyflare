@@ -13,11 +13,23 @@ You will need to create a config.json file in the same folder as pyflare.py - th
 Note the curly braces are not to be included.
 ```
 {
-	"email": "{the email address on your Cloudflare account}",
-	"key": "{your API key for Cloudflare}",
-	"zone": "{the DNS zone that contains the record you are updating}",
-	"record": "{the specific record to be updated}"
-	"ttl": "{time to live, 1=automatic}"
-	"proxied": "{true or false, default=false}"
+	"items": [{
+		"email": "username@email.com",
+		"key": "secretkeysecretkeysecretkey",
+		"zone": "mydomain.com",
+		"record": "myrecord.mydomain.com",
+		"ttl": "1"
+		"proxied": "false"
+	}, {
+		"email": "username@email.com",
+		"key": "secretkeysecretkeysecretkey",
+		"zone": "anotherdomain.com",
+		"record": "myrecord.anotherdomain.com",
+		"ttl": "1"
+		"proxied": "true"
+	}]
 }
 ```
+
+ttl -> 1=automatic
+proxied -> default=false
