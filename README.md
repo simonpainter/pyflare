@@ -9,6 +9,8 @@ If you are a Redditor please go give u/TheFirsh some tasty tasty karma.
 
 # config.json
 
+
+
 You will need to create a config.json file in the same folder as pyflare.py - this file must be json formatted and contain the following 4 elements. The example below shows how to update two records at the same time, you can add as many as you like.
 
 ```
@@ -19,12 +21,18 @@ You will need to create a config.json file in the same folder as pyflare.py - th
 		"zone": "mydomain.com",
 		"record": "myrecord.mydomain.com",
 		"ttl": "1"
+		"proxied": "false"
 	}, {
 		"email": "username@email.com",
 		"key": "secretkeysecretkeysecretkey",
 		"zone": "anotherdomain.com",
 		"record": "myrecord.anotherdomain.com",
 		"ttl": "1"
+
+		"proxied": "true"
 	}]
 }
 ```
+
+ttl -> 1=automatic
+proxied -> default=false

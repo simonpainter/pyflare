@@ -25,24 +25,24 @@ class Cloudflare:
         r = requests.get(self.endpoint + "/zones/" + zone_id + "/dns_records", headers=self.headers, params=payload)
         return r.json()
 
-    def update_record(self, zone_id, record_id, record, ttl, ip_address):
-        payload = {'type': 'A', 'name': record,'ttl': ttl, 'content': ip_address}
+    def update_record(self, zone_id, record_id, record, ttl, ip_address, proxied):
+        payload = {'type': 'A', 'name': record,'ttl': ttl, 'content': ip_address, 'proxied': proxied}
         r = requests.put(self.endpoint + "/zones/" + zone_id + "/dns_records/" + record_id, headers=self.headers, data=json.dumps(payload))
         return r.json()
 
-    def __call__(self,zone,record,ttl):
+    def __call__(self,zone,record,ttl,proxied):
         zone_id = cf.zones(zone)['result'][0]['id']
         record_id = cf.dns_records(zone_id, record)['result'][0]['id']
         ip_address = cf.getmyip()
         if ip_address != cf.dns_records(zone_id, record)['result'][0]['content']:
-            return cf.update_record(zone_id, record_id, record, ttl, ip_address)
+            return cf.update_record(zone_id, record_id, record, ttl, ip_address, proxied)
         else:
-            return "OK"
+            return "Record is up-to-date"
 
 if __name__ == '__main__':
-    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-    try:
-        with open(os.path.join(__location__,'config.json')) as json_data_file:
+	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+	try:
+		with open(os.path.join(__location__,'config.json')) as json_data_file:
             config = json.load(json_data_file)
             for item in config['items']:
                 email = item['email']
@@ -50,7 +50,12 @@ if __name__ == '__main__':
                 zone = item['zone']
                 record = item['record']
                 ttl = item['ttl']
+
+                proxied = item['proxied']
+
                 cf = Cloudflare(email, key)
-                print(cf(zone,record,ttl))
-    except IOError:
-        print("Unable to find config file.")
+                print(cf(zone,record,ttl, proxied))
+	except IOError:
+		print("Unable to find config file.")
+
+
