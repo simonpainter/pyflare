@@ -40,7 +40,6 @@ class Cloudflare:
             return "OK"
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     try:
         with open(os.path.join(__location__,'config.json')) as json_data_file:
@@ -50,22 +49,8 @@ if __name__ == '__main__':
                 key = item['key']
                 zone = item['zone']
                 record = item['record']
+                ttl = item['ttl']
                 cf = Cloudflare(email, key)
-                print(cf(zone,record))
+                print(cf(zone,record,ttl))
     except IOError:
         print("Unable to find config file.")
-=======
-	__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-	try:
-		with open(os.path.join(__location__,'config.json')) as json_data_file:
-			config = json.load(json_data_file)
-			email = config['email']
-			key = config['key']
-			zone = config['zone']
-			record = config['record']
-			ttl = config['ttl']
-		cf = Cloudflare(email, key)
-		print(cf(zone,record,ttl))
-	except IOError:
-		print("Unable to find config file.")
->>>>>>> 05b538bd8a951df6d249b374c207b677defefa24
