@@ -26,7 +26,7 @@ class Cloudflare:
         return r.json()
 
     def update_record(self, zone_id, record_id, record, ttl, ip_address, proxied):
-        payload = {'type': 'A', 'name': record,'ttl': ttl, 'content': ip_address, 'proxied': proxied}
+        payload = {'type': 'A', 'name': record,'ttl': int(ttl), 'content': ip_address, 'proxied': bool(proxied)}
         r = requests.put(self.endpoint + "/zones/" + zone_id + "/dns_records/" + record_id, headers=self.headers, data=json.dumps(payload))
         return r.json()
 

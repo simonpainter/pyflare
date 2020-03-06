@@ -19,14 +19,14 @@ You will need to create a config.json file in the same folder as pyflare.py - th
 		"zone": "mydomain.com",
 		"record": "myrecord.mydomain.com",
 		"ttl": "1"
-		"proxied": "false"
+		"proxied": 0
 	}, {
 		"email": "username@email.com",
 		"key": "secretkeysecretkeysecretkey",
 		"zone": "anotherdomain.com",
 		"record": "myrecord.anotherdomain.com",
 		"ttl": "1"
-		"proxied": "true"
+		"proxied": 1
 	}]
 }
 ```
