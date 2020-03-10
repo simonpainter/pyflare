@@ -12,7 +12,7 @@ class Cloudflare:
             self.headers = {'X-Auth-Email': email, 'X-Auth-Key': key, 'Content-Type': 'application/json'}
 
     def getmyip(self):
-        r = requests.get("https://api.ipify.org/")
+        r = requests.get("https://api.simonpainter.com/ip/")
         return r.text
 
     def user(self):
