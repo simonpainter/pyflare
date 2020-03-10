@@ -3,9 +3,13 @@ import json, os
 import requests
 
 class Cloudflare:
-    def __init__(self, email, key):
+    def __init__(self, email, key="", token=""):
         self.endpoint = "https://api.cloudflare.com/client/v4"
-        self.headers = {'X-Auth-Email': email, 'X-Auth-Key': key, 'Content-Type': 'application/json'}
+        if len(token)!=0:
+            bearer = str("Bearer " + token)
+            self.headers = {'Authorization': bearer, 'Content-Type': 'application/json'}
+        elif len(key)!=0 :
+            self.headers = {'X-Auth-Email': email, 'X-Auth-Key': key, 'Content-Type': 'application/json'}
 
     def getmyip(self):
         r = requests.get("https://api.ipify.org/")
@@ -47,11 +51,12 @@ if __name__ == '__main__':
             for item in config['items']:
                 email = item['email']
                 key = item['key']
+                token = item['token']
                 zone = item['zone']
                 record = item['record']
                 ttl = item['ttl']
                 proxied = item['proxied']
-                cf = Cloudflare(email, key)
+                cf = Cloudflare(email, key=key,token=token)
                 print(cf(zone,record,ttl, proxied))
     except IOError:
         print("Unable to find config file.")
